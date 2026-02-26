@@ -1,7 +1,7 @@
-## Mocks
+## 模拟对象
 
-To generate (or refresh) mocks from acl package please install [mockgen](https://github.com/golang/mock).
-Run this command from the `./client/internal/acl` folder to update iface mapper interface mock:
+要从 acl 包生成（或刷新）模拟对象，请安装 [mockgen](https://github.com/golang/mock)。
+从 `./client/internal/acl` 文件夹运行此命令以更新 iface mapper 接口模拟对象：
 ```bash
 mockgen -destination mocks/iface_mapper.go -package mocks . IFaceMapper
 ```

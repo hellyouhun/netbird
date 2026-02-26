@@ -9,8 +9,8 @@ type PeerRoutes struct {
 }
 
 func (p *PeerRoutes) Get(i int) (string, error) {
-	if i < 0 || i >= len(p.routes) {
-		return "", fmt.Errorf("%d is out of range", i)
+	if i >= len(p.routes) || i < 0 {
+		return "", fmt.Errorf("%d 超出范围", i)
 	}
 	return p.routes[i], nil
 }

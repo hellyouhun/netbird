@@ -12,30 +12,30 @@ func TestPreferences_DefaultValues(t *testing.T) {
 	p := NewPreferences(cfgFile)
 	defaultVar, err := p.GetAdminURL()
 	if err != nil {
-		t.Fatalf("failed to read default value: %s", err)
+		t.Fatalf("读取默认值失败: %s", err)
 	}
 
 	if defaultVar != profilemanager.DefaultAdminURL {
-		t.Errorf("invalid default admin url: %s", defaultVar)
+		t.Errorf("无效的管理员 URL 默认值: %s", defaultVar)
 	}
 
 	defaultVar, err = p.GetManagementURL()
 	if err != nil {
-		t.Fatalf("failed to read default management URL: %s", err)
+		t.Fatalf("读取默认管理 URL 失败: %s", err)
 	}
 
 	if defaultVar != profilemanager.DefaultManagementURL {
-		t.Errorf("invalid default management url: %s", defaultVar)
+		t.Errorf("无效的管理 URL 默认值: %s", defaultVar)
 	}
 
 	var preSharedKey string
 	preSharedKey, err = p.GetPreSharedKey()
 	if err != nil {
-		t.Fatalf("failed to read default preshared key: %s", err)
+		t.Fatalf("读取默认预共享密钥失败: %s", err)
 	}
 
 	if preSharedKey != "" {
-		t.Errorf("invalid preshared key: %s", preSharedKey)
+		t.Errorf("无效的预共享密钥: %s", preSharedKey)
 	}
 }
 
@@ -47,31 +47,31 @@ func TestPreferences_ReadUncommitedValues(t *testing.T) {
 	p.SetAdminURL(exampleString)
 	resp, err := p.GetAdminURL()
 	if err != nil {
-		t.Fatalf("failed to read admin url: %s", err)
+		t.Fatalf("读取管理员 URL 失败: %s", err)
 	}
 
 	if resp != exampleString {
-		t.Errorf("unexpected admin url: %s", resp)
+		t.Errorf("意外的管理员 URL: %s", resp)
 	}
 
 	p.SetManagementURL(exampleString)
 	resp, err = p.GetManagementURL()
 	if err != nil {
-		t.Fatalf("failed to read management url: %s", err)
+		t.Fatalf("读取管理 URL 失败: %s", err)
 	}
 
 	if resp != exampleString {
-		t.Errorf("unexpected management url: %s", resp)
+		t.Errorf("意外的管理 URL: %s", resp)
 	}
 
 	p.SetPreSharedKey(exampleString)
 	resp, err = p.GetPreSharedKey()
 	if err != nil {
-		t.Fatalf("failed to read preshared key: %s", err)
+		t.Fatalf("读取预共享密钥失败: %s", err)
 	}
 
 	if resp != exampleString {
-		t.Errorf("unexpected preshared key: %s", resp)
+		t.Errorf("意外的预共享密钥: %s", resp)
 	}
 }
 

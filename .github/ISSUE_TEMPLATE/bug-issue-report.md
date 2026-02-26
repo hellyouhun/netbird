@@ -1,71 +1,48 @@
 ---
-name: Bug/Issue report
-about: Create a report to help us improve
+name: 错误/问题报告
+about: 创建报告以帮助我们改进
 title: ''
 labels: ['triage-needed']
 assignees: ''
 
 ---
 
-**Describe the problem**
+**描述问题**
 
-A clear and concise description of what the problem is.
+清晰简洁地描述问题是什么。
 
-**To Reproduce**
+**复现步骤**
 
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+复现行为的步骤：
+1. 转到 '...'
+2. 点击 '....'
+3. 向下滚动到 '....'
+4. 看到错误
 
-**Expected behavior**
+**预期行为**
 
-A clear and concise description of what you expected to happen.
+清晰简洁地描述您期望发生的情况。
 
-**Are you using NetBird Cloud?**
+**您是否使用 NetBird Cloud？**
 
-Please specify whether you use NetBird Cloud or self-host NetBird's control plane.
+请说明您使用的是 NetBird Cloud 还是自托管 NetBird 的控制平面。
 
-**NetBird version**
+**NetBird 版本**
 
 `netbird version`
 
-**Is any other VPN software installed?**
+**是否安装了其他 VPN 软件？**
 
-If yes, which one?
+如果是，是哪一个？
 
-**Debug output**
+**调试输出**
 
-To help us resolve the problem, please attach the following anonymized status output
+为帮助我们解决问题，请附上以下匿名化状态输出
 
   netbird status -dA
 
-Create and upload a debug bundle, and share the returned file key:
+创建并上传调试包，并分享返回的文件密钥：
 
   netbird debug for 1m -AS -U
 
-*Uploaded files are automatically deleted after 30 days.*
-
-
-Alternatively, create the file only and attach it here manually:
-
-  netbird debug for 1m -AS
-
-
-**Screenshots**
-
-If applicable, add screenshots to help explain your problem.
-
-**Additional context**
-
-Add any other context about the problem here.
-
-**Have you tried these troubleshooting steps?**
-- [ ] Reviewed [client troubleshooting](https://docs.netbird.io/how-to/troubleshooting-client) (if applicable)
-- [ ] Checked for newer NetBird versions
-- [ ] Searched for similar issues on GitHub (including closed ones)
-- [ ] Restarted the NetBird client
-- [ ] Disabled other VPN software
-- [ ] Checked firewall settings
-
+*上传的文件将在 30 天后自动删除。*

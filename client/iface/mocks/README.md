@@ -1,7 +1,7 @@
-## Mocks
+## 模拟对象
 
-To generate (or refresh) mocks from iface package interfaces please install [mockgen](https://github.com/golang/mock).
-Run this command to update PacketFilter mock:
+要从 iface 包接口生成（或刷新）模拟对象，请安装 [mockgen](https://github.com/golang/mock)。
+运行此命令以更新 PacketFilter 模拟对象：
 ```bash
 mockgen -destination iface/mocks/filter.go -package mocks github.com/netbirdio/netbird/iface PacketFilter
 ```

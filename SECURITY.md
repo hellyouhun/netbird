@@ -1,12 +1,12 @@
-# Security Policy
+# 安全政策
 
-NetBird's goal is to provide a secure network. If you find a vulnerability or bug, please report it by opening an issue [here](https://github.com/netbirdio/netbird/issues/new?assignees=&labels=&template=bug-issue-report.md&title=) or by contacting us by email.
+NetBird 的目标是提供安全的网络。如果您发现漏洞或错误，请通过[此处](https://github.com/netbirdio/netbird/issues/new?assignees=&labels=&template=bug-issue-report.md&title=)打开问题或通过电子邮件联系我们报告。
 
-There has yet to be an official bug bounty program for the NetBird project.
+NetBird 项目目前尚无官方的漏洞赏金计划。
 
-## Supported Versions
-- We currently support only the latest version
+## 支持的版本
+- 我们目前仅支持最新版本
 
-## Reporting a Vulnerability
+## 报告漏洞
 
-Please report security issues to `security@netbird.io`
+请将安全问题报告至 `security@netbird.io`

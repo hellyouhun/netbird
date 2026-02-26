@@ -92,7 +92,7 @@ func (pm *ProfileManager) ListProfiles() (*ProfileArray, error) {
 	// Use ServiceManager (looks in profiles/ directory, checks active_profile.json for IsActive)
 	internalProfiles, err := pm.serviceMgr.ListProfiles(androidUsername)
 	if err != nil {
-		return nil, fmt.Errorf("failed to list profiles: %w", err)
+		return nil, fmt.Errorf("获取配置文件列表失败: %w", err)
 	}
 
 	// Convert internal profiles to Android Profile type
@@ -113,7 +113,7 @@ func (pm *ProfileManager) GetActiveProfile() (string, error) {
 	// ServiceManager uses active_profile.json
 	activeState, err := pm.serviceMgr.GetActiveProfileState()
 	if err != nil {
-		return "", fmt.Errorf("failed to get active profile: %w", err)
+		return "", fmt.Errorf("获取活动配置文件失败: %w", err)
 	}
 	return activeState.Name, nil
 }
@@ -138,10 +138,10 @@ func (pm *ProfileManager) SwitchProfile(profileName string) error {
 func (pm *ProfileManager) AddProfile(profileName string) error {
 	// Use ServiceManager (creates profile in profiles/ directory)
 	if err := pm.serviceMgr.AddProfile(profileName, androidUsername); err != nil {
-		return fmt.Errorf("failed to add profile: %w", err)
+		return fmt.Errorf("添加配置文件失败: %w", err)
 	}
 
-	log.Infof("created new profile: %s", profileName)
+	log.Infof("已创建新配置文件: %s", profileName)
 	return nil
 }
 
@@ -171,10 +171,10 @@ func (pm *ProfileManager) LogoutProfile(profileName string) error {
 
 	// Save config using internal profilemanager
 	if err := profilemanager.WriteOutConfig(configPath, config); err != nil {
-		return fmt.Errorf("failed to save config: %w", err)
+		return fmt.Errorf("保存配置失败: %w", err)
 	}
 
-	log.Infof("logged out from profile: %s", profileName)
+	log.Infof("已从配置文件注销: %s", profileName)
 	return nil
 }
 
@@ -228,7 +228,7 @@ func (pm *ProfileManager) GetStateFilePath(profileName string) (string, error) {
 func (pm *ProfileManager) GetActiveConfigPath() (string, error) {
 	activeProfile, err := pm.GetActiveProfile()
 	if err != nil {
-		return "", fmt.Errorf("failed to get active profile: %w", err)
+		return "", fmt.Errorf("获取活动配置文件失败: %w", err)
 	}
 	return pm.GetConfigPath(activeProfile)
 }
@@ -238,7 +238,7 @@ func (pm *ProfileManager) GetActiveConfigPath() (string, error) {
 func (pm *ProfileManager) GetActiveStateFilePath() (string, error) {
 	activeProfile, err := pm.GetActiveProfile()
 	if err != nil {
-		return "", fmt.Errorf("failed to get active profile: %w", err)
+		return "", fmt.Errorf("获取活动配置文件失败: %w", err)
 	}
 	return pm.GetStateFilePath(activeProfile)
 }

@@ -21,6 +21,6 @@ func execWorkaround(androidSDKVersion int) {
 	}
 
 	checkPidfdOnce = func() error {
-		return fmt.Errorf("unsupported Android version")
+		return fmt.Errorf("不支持的 Android 版本")
 	}
 }

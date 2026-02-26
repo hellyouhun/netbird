@@ -21,8 +21,8 @@ func executeRouteToggle(id string, manager routemanager.Manager,
 	log.Debugf("%s with id: %s", operationName, id)
 
 	if err := routeOperation(routes, maps.Keys(manager.GetClientRoutesWithNetID())); err != nil {
-		log.Debugf("error when %s: %s", operationName, err)
-		return fmt.Errorf("error %s: %w", operationName, err)
+		log.Debugf("执行 %s 时出错: %s", operationName, err)
+		return fmt.Errorf("%s 出错: %w", operationName, err)
 	}
 
 	manager.TriggerSelection(manager.GetClientRoutes())
@@ -42,14 +42,14 @@ type selectRouteCommand struct {
 func (s selectRouteCommand) toggleRoute() error {
 	routeSelector := s.manager.GetRouteSelector()
 	if routeSelector == nil {
-		return fmt.Errorf("no route selector available")
+		return fmt.Errorf("无可用路由选择器")
 	}
 
 	routeOperation := func(routes []route.NetID, allRoutes []route.NetID) error {
 		return routeSelector.SelectRoutes(routes, true, allRoutes)
 	}
 
-	return executeRouteToggle(s.route, s.manager, "selecting route", routeOperation)
+	return executeRouteToggle(s.route, s.manager, "选择路由", routeOperation)
 }
 
 type deselectRouteCommand struct {

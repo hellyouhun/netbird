@@ -5,30 +5,30 @@ import "testing"
 func TestDNSList_Get(t *testing.T) {
 	l := DNSList{}
 
-	// Add a valid DNS address
+	// 添加有效的 DNS 地址
 	err := l.Add("8.8.8.8")
 	if err != nil {
-		t.Errorf("unexpected error: %s", err)
+		t.Errorf("意外的错误: %s", err)
 	}
 
-	// Test getting valid index
+	// 测试获取有效索引
 	addr, err := l.Get(0)
 	if err != nil {
-		t.Errorf("invalid error: %s", err)
+		t.Errorf("无效的错误: %s", err)
 	}
 	if addr != "8.8.8.8" {
-		t.Errorf("expected 8.8.8.8, got %s", addr)
+		t.Errorf("期望 8.8.8.8，得到 %s", addr)
 	}
 
-	// Test negative index
+	// 测试负索引
 	_, err = l.Get(-1)
 	if err == nil {
-		t.Errorf("expected error but got nil")
+		t.Errorf("期望错误但得到 nil")
 	}
 
-	// Test out of bounds index
+	// 测试超出范围索引
 	_, err = l.Get(1)
 	if err == nil {
-		t.Errorf("expected error but got nil")
+		t.Errorf("期望错误但得到 nil")
 	}
 }

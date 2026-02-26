@@ -78,13 +78,13 @@ func (a *Auth) SaveConfigIfSSOSupported(listener SSOListener) {
 func (a *Auth) saveConfigIfSSOSupported() (bool, error) {
 	authClient, err := auth.NewAuth(a.ctx, a.config.PrivateKey, a.config.ManagementURL, a.config)
 	if err != nil {
-		return false, fmt.Errorf("failed to create auth client: %v", err)
+		return false, fmt.Errorf("创建认证客户端失败: %v", err)
 	}
 	defer authClient.Close()
 
 	supportsSSO, err := authClient.IsSSOSupported(a.ctx)
 	if err != nil {
-		return false, fmt.Errorf("failed to check SSO support: %v", err)
+		return false, fmt.Errorf("检查 SSO 支持失败: %v", err)
 	}
 
 	if !supportsSSO {
@@ -171,19 +171,19 @@ func (a *Auth) login(urlOpener URLOpener, isAndroidTV bool) error {
 func (a *Auth) foregroundGetTokenInfo(authClient *auth.Auth, urlOpener URLOpener, isAndroidTV bool) (*auth.TokenInfo, error) {
 	oAuthFlow, err := authClient.GetOAuthFlow(a.ctx, isAndroidTV)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get OAuth flow: %v", err)
+		return nil, fmt.Errorf("获取 OAuth 流程失败: %v", err)
 	}
 
 	flowInfo, err := oAuthFlow.RequestAuthInfo(context.TODO())
 	if err != nil {
-		return nil, fmt.Errorf("getting a request OAuth flow info failed: %v", err)
+		return nil, fmt.Errorf("获取 OAuth 流程信息失败: %v", err)
 	}
 
 	go urlOpener.Open(flowInfo.VerificationURIComplete, flowInfo.UserCode)
 
 	tokenInfo, err := oAuthFlow.WaitToken(a.ctx, flowInfo)
 	if err != nil {
-		return nil, fmt.Errorf("waiting for browser login failed: %v", err)
+		return nil, fmt.Errorf("等待浏览器登录失败: %v", err)
 	}
 
 	return &tokenInfo, nil

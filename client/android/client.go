@@ -94,7 +94,7 @@ func (c *Client) Run(platformFiles PlatformFiles, urlOpener URLOpener, isAndroid
 	cfgFile := platformFiles.ConfigurationFilePath()
 	stateFile := platformFiles.StateFilePath()
 
-	log.Infof("Starting client with config: %s, state: %s", cfgFile, stateFile)
+	log.Infof("正在启动客户端，配置: %s，状态: %s", cfgFile, stateFile)
 
 	cfg, err := profilemanager.UpdateOrCreateConfig(profilemanager.ConfigInput{
 		ConfigPath: cfgFile,
@@ -136,7 +136,7 @@ func (c *Client) RunWithoutLogin(platformFiles PlatformFiles, dns *DNSList, dnsR
 	cfgFile := platformFiles.ConfigurationFilePath()
 	stateFile := platformFiles.StateFilePath()
 
-	log.Infof("Starting client without login with config: %s, state: %s", cfgFile, stateFile)
+	log.Infof("正在无需登录启动客户端，配置: %s，状态: %s", cfgFile, stateFile)
 
 	cfg, err := profilemanager.UpdateOrCreateConfig(profilemanager.ConfigInput{
 		ConfigPath: cfgFile,
@@ -364,7 +364,7 @@ func exportEnvList(list *EnvList) {
 	}
 	for k, v := range list.AllItems() {
 		if err := os.Setenv(k, v); err != nil {
-			log.Errorf("could not set env variable %s: %v", k, err)
+			log.Errorf("无法设置环境变量 %s: %v", k, err)
 		}
 	}
 }

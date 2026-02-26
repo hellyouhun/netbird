@@ -14,7 +14,7 @@ func (r *ResolvedIPs) Add(ipAddress string) {
 
 func (r *ResolvedIPs) Get(i int) (string, error) {
 	if i < 0 || i >= len(r.resolvedIPs) {
-		return "", fmt.Errorf("%d is out of range", i)
+		return "", fmt.Errorf("%d 超出范围", i)
 	}
 	return r.resolvedIPs[i], nil
 }
@@ -46,7 +46,7 @@ func (n *NetworkDomains) Add(domain *NetworkDomain) {
 
 func (n *NetworkDomains) Get(i int) (*NetworkDomain, error) {
 	if i < 0 || i >= len(n.domains) {
-		return nil, fmt.Errorf("%d is out of range", i)
+		return nil, fmt.Errorf("%d 超出范围", i)
 	}
 	return n.domains[i], nil
 }

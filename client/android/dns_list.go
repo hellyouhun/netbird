@@ -16,7 +16,7 @@ type DNSList struct {
 func (array *DNSList) Add(s string) error {
 	addr, err := netip.ParseAddr(s)
 	if err != nil {
-		return fmt.Errorf("invalid DNS address: %s", s)
+		return fmt.Errorf("无效的 DNS 地址: %s", s)
 	}
 	addrPort := netip.AddrPortFrom(addr.Unmap(), dns.DefaultPort)
 	array.items = append(array.items, addrPort)
@@ -26,7 +26,7 @@ func (array *DNSList) Add(s string) error {
 // Get return an element of the collection as string
 func (array *DNSList) Get(i int) (string, error) {
 	if i >= len(array.items) || i < 0 {
-		return "", fmt.Errorf("out of range")
+		return "", fmt.Errorf("超出范围")
 	}
 	return array.items[i].Addr().String(), nil
 }
