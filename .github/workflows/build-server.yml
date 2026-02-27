@@ -1,0 +1,131 @@
+name: Build Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '要编译的分支'
+        required: true
+        default: 'main'
+        type: string
+
+env:
+  GO_VERSION: "1.23.4"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-server:
+    name: Build NetBird Server Components
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: "go.sum"
+
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libsqlite3-dev
+
+      - name: Get version info
+        id: version
+        run: |
+          VERSION=$(git describe --tags --always 2>/dev/null || git rev-parse --short HEAD)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Build version: $VERSION"
+
+      - name: Build Management Server
+        run: |
+          echo "Building Management Server..."
+          cd management
+          go mod download
+          go build -ldflags="-s -w" -o ../dist/netbird-mgmt main.go
+          echo "Management Server built successfully"
+
+      - name: Build Signal Server
+        run: |
+          echo "Building Signal Server..."
+          cd signal
+          go mod download
+          go build -ldflags="-s -w" -o ../dist/netbird-signal main.go
+          echo "Signal Server built successfully"
+
+      - name: Build Relay Server
+        run: |
+          echo "Building Relay Server..."
+          cd relay
+          go mod download
+          go build -ldflags="-s -w" -o ../dist/netbird-relay main.go
+          echo "Relay Server built successfully"
+
+      - name: Verify builds
+        run: |
+          echo "Verifying builds..."
+          ls -lh dist/
+          file dist/netbird-mgmt
+          file dist/netbird-signal
+          file dist/netbird-relay
+
+      - name: Create package
+        run: |
+          mkdir -p package
+          cp dist/netbird-mgmt package/
+          cp dist/netbird-signal package/
+          cp dist/netbird-relay package/
+          
+          # 创建版本信息文件
+          echo "Version: ${{ steps.version.outputs.version }}" > package/VERSION.txt
+          echo "Build Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> package/VERSION.txt
+          echo "Commit: $(git rev-parse HEAD)" >> package/VERSION.txt
+          
+          # 创建压缩包
+          cd package
+          tar -czf ../netbird-server-${{ steps.version.outputs.version }}-linux-amd64.tar.gz .
+          cd ..
+          
+          ls -lh netbird-server-*.tar.gz
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: netbird-server-${{ steps.version.outputs.version }}
+          path: |
+            dist/
+            package/
+            netbird-server-*.tar.gz
+          retention-days: 30
+
+      - name: Build Summary
+        run: |
+          echo "========================================"
+          echo "Build Summary"
+          echo "========================================"
+          echo "Version: ${{ steps.version.outputs.version }}"
+          echo "Branch: ${{ github.event.inputs.branch }}"
+          echo ""
+          echo "Built Components:"
+          ls -lh dist/
+          echo ""
+          echo "Package:"
+          ls -lh netbird-server-*.tar.gz
